@@ -4,7 +4,7 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
+    @books = Book.joins(:author).select("authors.name as authorname, books.*")
   end
 
   # GET /books/1
@@ -64,7 +64,7 @@ class BooksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
-      @book = Book.find(params[:id])
+      @book = Book.joins(:author).select("authors.name as authorname, books.*").find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
